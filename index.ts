@@ -4,7 +4,7 @@ import robot from 'robotjs';
 import { WebSocketServer, createWebSocketStream } from 'ws';
 import { create } from 'ts-node';
 
-import { drawRectangle, drawCircle } from './src/utils/utils';
+import { processСommand } from './src/utils/utils';
 
 const HTTP_PORT = 3000;
 
@@ -23,21 +23,22 @@ wss.on('connection', ws => {
     const { x, y } = robot.getMousePos();
 
     if (command === 'mouse_up') {
-      robot.moveMouseSmooth(x, y - +param1);
+      robot.moveMouse(x, y - +param1);
     } else   if (command === 'mouse_down') {
-      robot.moveMouseSmooth(x, y + +param1);
+      robot.moveMouse(x, y + +param1);
     } else   if (command === 'mouse_left') {
-      robot.moveMouseSmooth(x - +param1, y);
+      robot.moveMouse(x - +param1, y);
     } else   if (command === 'mouse_right') {
-      robot.moveMouseSmooth(x + +param1, y);
+      robot.moveMouse(x + +param1, y);
     } else   if (command === 'mouse_position') {
+      console.log(`Mouse position: x - ${x}, y - ${y}`);
       ws.send(`mouse_position ${x},${y}`);
     } else   if (command === 'draw_circle') {
-      drawCircle(+param1);
+      console.log('draw_circle');
     } else   if (command === 'draw_rectangle') {
-      drawRectangle(+param2, +param1);
+      console.log('draw_rectangle');
     } else   if (command === 'draw_square') {
-      drawRectangle(+param1, +param1);
+      console.log('draw_square');
     } else   if (command === 'prnt_scrn') {
       console.log('prnt_scrn');
     } else {
