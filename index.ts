@@ -4,7 +4,7 @@ import robot from 'robotjs';
 import { WebSocketServer, createWebSocketStream } from 'ws';
 import { create } from 'ts-node';
 
-import { drawRectangle } from './src/utils/utils';
+import { drawRectangle, drawCircle } from './src/utils/utils';
 
 const HTTP_PORT = 3000;
 
@@ -31,10 +31,9 @@ wss.on('connection', ws => {
     } else   if (command === 'mouse_right') {
       robot.moveMouse(x + +param1, y);
     } else   if (command === 'mouse_position') {
-      console.log(`Mouse position: x - ${x}, y - ${y}`);
       ws.send(`mouse_position ${x},${y}`);
     } else   if (command === 'draw_circle') {
-      console.log('draw_circle');
+      drawCircle(+param1);
     } else   if (command === 'draw_rectangle') {
       drawRectangle(+param2, +param1);
     } else   if (command === 'draw_square') {
