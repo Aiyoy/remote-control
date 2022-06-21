@@ -4,7 +4,7 @@ import robot from 'robotjs';
 import { WebSocketServer, createWebSocketStream } from 'ws';
 import { create } from 'ts-node';
 
-import { processСommand } from './src/utils/utils';
+import { drawRectangle } from './src/utils/utils';
 
 const HTTP_PORT = 3000;
 
@@ -36,9 +36,9 @@ wss.on('connection', ws => {
     } else   if (command === 'draw_circle') {
       console.log('draw_circle');
     } else   if (command === 'draw_rectangle') {
-      console.log('draw_rectangle');
+      drawRectangle(+param2, +param1);
     } else   if (command === 'draw_square') {
-      console.log('draw_square');
+      drawRectangle(+param1, +param1);
     } else   if (command === 'prnt_scrn') {
       console.log('prnt_scrn');
     } else {
