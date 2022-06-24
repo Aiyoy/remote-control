@@ -9,12 +9,12 @@ export const printScreen = async () => {
 
       const bitmap = robot.screen.capture(x, y, size, size);
 
-      var image = new Jimp(bitmap.width, bitmap.height);
+      const image = new Jimp(bitmap.width, bitmap.height);
       image.scan(0, 0, image.bitmap.width, image.bitmap.height, function (x, y, idx) {
-        var color = bitmap.colorAt(x, y);
-        var red = parseInt(color[0] + color[1], 16);
-        var green = parseInt(color[2] + color[3], 16);
-        var blue = parseInt(color[4] + color[5], 16);
+        const color = bitmap.colorAt(x, y);
+        const red = parseInt(color[0] + color[1], 16);
+        const green = parseInt(color[2] + color[3], 16);
+        const blue = parseInt(color[4] + color[5], 16);
 
         image.bitmap.data[idx + 0] = Number(red);
         image.bitmap.data[idx + 1] = Number(green);
