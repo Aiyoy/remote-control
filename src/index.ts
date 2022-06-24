@@ -1,10 +1,10 @@
 import Jimp from 'jimp';
-import {httpServer} from './src/http_server/index';
+import {httpServer} from './http_server/index';
 import robot from 'robotjs';
 import { WebSocketServer, createWebSocketStream } from 'ws';
 import { create } from 'ts-node';
 
-import { drawRectangle, drawCircle } from './src/utils/utils';
+import { drawRectangle, drawCircle, printScreen } from './utils/utils';
 
 const HTTP_PORT = 3000;
 
@@ -17,7 +17,7 @@ wss.on('connection', ws => {
   console.log('Connection accepted!');
 
   const stream = createWebSocketStream(ws, { encoding: 'utf8' });
-  stream.on('data', (data) => {
+  stream.on('data', async (data) => {
     const [command, param1, param2, ...params] = data.split(' ');
 
     const { x, y } = robot.getMousePos();
@@ -39,9 +39,8 @@ wss.on('connection', ws => {
     } else   if (command === 'draw_square') {
       drawRectangle(+param1, +param1);
     } else   if (command === 'prnt_scrn') {
-      console.log('prnt_scrn');
-    } else {
-      console.log('else', command);
+      const image = await printScreen();
+      ws.send(`prnt_scrn ${image}`);
     }
   })
 })
