@@ -54,3 +54,9 @@ wss.on('connection', ws => {
     }
   })
 })
+
+process.on('SIGINT', () => {
+  console.log('Websocket close!');
+  wss.close();
+  process.exit(0);
+});
