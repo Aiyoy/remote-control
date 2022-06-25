@@ -27,23 +27,30 @@ wss.on('connection', ws => {
 
     if (command === 'mouse_up') {
       robot.moveMouse(x, y - +param1);
+      ws.send(`${command}\0`);
     } else   if (command === 'mouse_down') {
+      ws.send(`${command}\0`);
       robot.moveMouse(x, y + +param1);
     } else   if (command === 'mouse_left') {
+      ws.send(`${command}\0`);
       robot.moveMouse(x - +param1, y);
     } else   if (command === 'mouse_right') {
+      ws.send(`${command}\0`);
       robot.moveMouse(x + +param1, y);
     } else   if (command === 'mouse_position') {
-      ws.send(`mouse_position ${x},${y}`);
+      ws.send(`mouse_position ${x},${y}\0`);
     } else   if (command === 'draw_circle') {
+      ws.send(`${command}\0`);
       drawCircle(+param1);
     } else   if (command === 'draw_rectangle') {
+      ws.send(`${command}\0`);
       drawRectangle(+param2, +param1);
     } else   if (command === 'draw_square') {
+      ws.send(`${command}\0`);
       drawSquare(+param1);
     } else   if (command === 'prnt_scrn') {
       const image = await printScreen();
-      ws.send(`prnt_scrn ${image}`);
+      ws.send(`prnt_scrn ${image}\0`);
     }
   })
 })
